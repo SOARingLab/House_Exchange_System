@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+		#l-map{height:100%;width:78%;float:left;border-right:2px solid #bcbcbc;}
+		#r-result{height:100%;width:20%;float:left;}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=CWZ0GuwuA81lUA8jpQrxPEomAjx61BGK"></script>
+	<title>User Trace</title>
+</head>
+<body>
+	<div id="allmap"></div>
+</body>
+</html>
+
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(121.14467411, 30.10514611);
+	map.centerAndZoom(point, 10);
+
+	var loc = {{ trace|safe }};
+    var center = {{ cluster_center|safe }};
+
+	var points1 = [];
+	var points2 = [];
+	var points3 = [];
+	var points = [];
+	var points_ave = [];
+
+	for (var i = 0; i < loc.length; i++)
+    {
+        var curr = [];
+        for (var j = 0; j < loc[i].length; j++)
+        {
+            curr.push(new BMap.Point(loc[i][j][3],loc[i][j][4]));
+        }
+        points.push(curr);
+    }
+
+	for (var i = 0; i < center.length; i++)
+    {
+        points_ave.push(new BMap.Point(center[i][0],center[i][1]));
+    }
+
+ 	var options_ave =
+ 	{
+        size: BMAP_POINT_SIZE_SMALL,
+        shape: BMAP_POINT_SHAPE_STAR,
+        color: '#000000'
+    }
+
+ 	var options1 =
+ 	{
+        size: BMAP_POINT_SIZE_SMALL,
+        shape: BMAP_POINT_SHAPE_STAR,
+        color: '#d340c3'
+    }
+    var options2 =
+ 	{
+        size: BMAP_POINT_SIZE_SMALL,
+        shape: BMAP_POINT_SHAPE_STAR,
+        color: '#58c132'
+    }
+    var options3 =
+ 	{
+        size: BMAP_POINT_SIZE_SMALL,
+        shape: BMAP_POINT_SHAPE_STAR,
+        color: '#2a28bf'
+    }
+
+	var options_all = [];
+	options_all.push(options3, options1, options2);
+
+	for (var i = 0; i < points.length; i++)
+    {
+        var pointCollection = new BMap.PointCollection(points[i], options_all[i]);
+        map.addOverlay(pointCollection);
+    }
+
+	var pointCollection_ave = new BMap.PointCollection(points_ave, options_ave);
+	map.addOverlay(pointCollection_ave);
+
+    // 地址解析test
+
+    //
+	var myGeo = new BMap.Geocoder();
+	myGeo.getLocation(new BMap.Point(ave1[0], ave1[1]), function(result){
+        if (result){
+        alert('常去地点1：' + result.address);
+        }
+    });
+	myGeo.getLocation(new BMap.Point(ave2[0], ave2[1]), function(result){
+        if (result){
+        alert('常去地点2：' + result.address);
+        }
+    });
+	myGeo.getLocation(new BMap.Point(ave3[0], ave3[1]), function(result){
+        if (result){
+        alert('常去地点3：' + result.address);
+        }
+    });
+
+
+</script>
+

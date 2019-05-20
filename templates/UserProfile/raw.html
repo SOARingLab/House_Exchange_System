@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<style type="text/css">
+		body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;font-family:"微软雅黑";}
+		#l-map{height:100%;width:78%;float:left;border-right:2px solid #bcbcbc;}
+		#r-result{height:100%;width:20%;float:left;}
+	</style>
+	<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=CWZ0GuwuA81lUA8jpQrxPEomAjx61BGK"></script>
+	<title>User Trace</title>
+</head>
+<body>
+	<div id="allmap"></div>
+</body>
+</html>
+
+<script type="text/javascript">
+	// 百度地图API功能
+	var map = new BMap.Map("allmap");
+	var point = new BMap.Point(121.14467411, 30.10514611);
+	map.centerAndZoom(point, 10);
+
+    var loc = {{ trace|safe }};
+
+	var points = [];
+
+ 	for (var i = 0;i < loc.length;i++)
+ 	{
+ 		points.push(new BMap.Point(loc[i][3],loc[i][4]))
+ 	}
+
+ 	var options =
+ 	{
+        size: BMAP_POINT_SIZE_SMALL,
+        shape: BMAP_POINT_SHAPE_STAR,
+        color: '#ef0404'
+    }
+
+    var pointCollection = new BMap.PointCollection(points, options);
+
+    map.addOverlay(pointCollection);
+
+
+
+</script>
+
