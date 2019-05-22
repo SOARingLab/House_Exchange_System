@@ -10,3 +10,4 @@ class trace(models.Model):
     latitude = models.CharField(max_length = 50)
     date = models.CharField(max_length = 50)
     cluster = models.IntegerField()
+    duration = models.CharField(max_length=50)
