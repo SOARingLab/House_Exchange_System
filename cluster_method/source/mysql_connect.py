@@ -10,7 +10,7 @@ def load_data(link, username, password, database):
     cursor = db.cursor()
 
     # 使用 execute()  方法执行 SQL 查询
-    cursor.execute("SELECT id,LONGITUDE,LATITUDE,DURATION FROM UserProfile_trace_test")
+    cursor.execute("SELECT id,LONGITUDE,LATITUDE,DURATION FROM UserProfile_trace")
 
     # 使用 fetchone() 方法获取单条数据.
     data = cursor.fetchall()
@@ -28,12 +28,26 @@ def update_database(link, username, password, database, processed_data):
     for i in range(len(processed_data)):
         for item in processed_data[i]:
             # SQL 更新语句
-            sql = 'UPDATE UserProfile_trace_test SET cluster = {} WHERE id = {}'.format(i + 1, item[0])
+            sql = 'UPDATE UserProfile_trace SET cluster = {} WHERE id = {}'.format(i + 1, item[0])
             try:
                 cursor.execute(sql)
                 db.commit()
             except:
                 # 发生错误时回滚
                 db.rollback()
+
+    db.close()
+
+# 重置数据库中的cluster字段
+def reset_database(link, username, password, database):
+    db = pymysql.connect(link, username, password, database)
+    cursor = db.cursor()
+    sql = 'UPDATE UserProfile_trace SET cluster = 0'
+
+    try:
+        cursor.execute(sql)
+        db.commit()
+    except:
+        db.rollback()
 
     db.close()

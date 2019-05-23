@@ -1,3 +1,4 @@
+
 def TF(neighbor):
     # 总持续时间
     duration_sum = 0

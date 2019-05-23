@@ -1,4 +1,4 @@
-from source import disCompute
+from cluster_method.source import disCompute
 
 
 #计算density-based neighborhood

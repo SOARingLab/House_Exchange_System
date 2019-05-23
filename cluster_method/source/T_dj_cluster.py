@@ -1,11 +1,14 @@
-from source import density_Join, mysql_connect, neighbor_com, timeFrequent
+from cluster_method.source import density_Join, mysql_connect, neighbor_com, timeFrequent
 
 #Neighbor半径 0.5
 eps = 2
 #最少Neighbor数量 120
 min_pts = 50
 #最短的持续时间总和
-delta_t = 100000000
+delta_t = 2000
+
+#重置数据表中的cluster字段
+mysql_connect.reset_database('localhost', 'root', 'wsnxdyj', 'user_trace')
 
 # 获取原始数据集
 data = list(mysql_connect.load_data('localhost', 'root', 'wsnxdyj', 'user_trace'))
