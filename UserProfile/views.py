@@ -80,8 +80,11 @@ def poi_search(request):
     # 存储将要传递给前端的内容
     context = {}
 
+    context['clusters'] = {}
+
     # 对于每个聚类中心，分析其周边POI分布
     for i in range(cluster_count):
+
         cluster_POI = {}
 
         # 针对每个候选的POI类别
@@ -110,7 +113,10 @@ def poi_search(request):
             else:
                 cluster_POI[POI] = 'None'
 
+        # 将查询到的POI信息存储在context中的'clusters'字段中
         cluster_th = 'cluster' + str(i)
-        context[cluster_th] = json.dumps(cluster_POI)
-        context['User_id'] = json.dumps(User_id)
+        context['clusters'][cluster_th] = cluster_POI
+        context['User_id'] = User_id
+        context['cluster_avg'] = res_avg
+
     return render(request, 'UserProfile/profile.html', context)
