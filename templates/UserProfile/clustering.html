@@ -22,15 +22,17 @@
 	var point = new BMap.Point(121.14467411, 30.10514611);
 	map.centerAndZoom(point, 10);
 
+    // 用户轨迹
 	var loc = {{ trace|safe }};
+	// 聚类中心点
     var center = {{ cluster_center|safe }};
 
-	var points1 = [];
-	var points2 = [];
-	var points3 = [];
+    // 用来存储坐标点
 	var points = [];
+	// 用来存储聚类中心坐标点
 	var points_ave = [];
 
+	// 解析后端传递的json数据，存储到points中
 	for (var i = 0; i < loc.length; i++)
     {
         var curr = [];
@@ -41,90 +43,60 @@
         points.push(curr);
     }
 
+	// 解析后端传递的json数据，存储到points_ave中
 	for (var i = 0; i < center.length; i++)
     {
         points_ave.push(new BMap.Point(center[i][0],center[i][1]));
     }
 
+	// 聚类中心在地图上的显示颜色
  	var options_ave =
  	{
         size: BMAP_POINT_SIZE_SMALL,
         shape: BMAP_POINT_SHAPE_STAR,
         color: '#000000'
-    }
+    };
 
- 	var options1 =
- 	{
-        size: BMAP_POINT_SIZE_SMALL,
-        shape: BMAP_POINT_SHAPE_STAR,
-        color: '#d340c3'
-    }
-    var options2 =
- 	{
-        size: BMAP_POINT_SIZE_SMALL,
-        shape: BMAP_POINT_SHAPE_STAR,
-        color: '#58c132'
-    }
-    var options3 =
- 	{
-        size: BMAP_POINT_SIZE_SMALL,
-        shape: BMAP_POINT_SHAPE_STAR,
-        color: '#2a28bf'
-    }
+	// 颜色库
+    var colors = ['#d340c3', '#58c132', '#2a28bf', '#ef0404', '#4B0082', '#B0C4DE', '#B580C1', '#38D7EF'];
 
-	var options4 =
- 	{
-        size: BMAP_POINT_SIZE_SMALL,
-        shape: BMAP_POINT_SHAPE_STAR,
-        color: '#ef0404'
-    }
 
-	var options5 =
- 	{
-        size: BMAP_POINT_SIZE_SMALL,
-        shape: BMAP_POINT_SHAPE_STAR,
-        color: '#4B0082'
-    }
-
-	var options6 =
- 	{
-        size: BMAP_POINT_SIZE_SMALL,
-        shape: BMAP_POINT_SHAPE_STAR,
-        color: '#B0C4DE'
-    }
-
+    // 根据聚类类别的数量选择相应种类的颜色
 	var options_all = [];
-	options_all.push(options3, options1, options2, options4, options5, options6);
+	for (var i = 0; i < center.length; i++)
+    {
+        var option =
+            {
+                size: BMAP_POINT_SIZE_SMALL,
+                shape: BMAP_POINT_SHAPE_STAR,
+                color: colors[i]
+            };
 
+        options_all.push(option)
+    }
+
+	// 在地图上显示轨迹坐标点
 	for (var i = 0; i < points.length; i++)
     {
         var pointCollection = new BMap.PointCollection(points[i], options_all[i]);
         map.addOverlay(pointCollection);
     }
 
+	// 在地图上显示聚类中心点
 	var pointCollection_ave = new BMap.PointCollection(points_ave, options_ave);
 	map.addOverlay(pointCollection_ave);
 
-    // 地址解析test
 
-    //
+    // 提示框
 	var myGeo = new BMap.Geocoder();
-	myGeo.getLocation(new BMap.Point(ave1[0], ave1[1]), function(result){
-        if (result){
-        alert('常去地点1：' + result.address);
-        }
-    });
-	myGeo.getLocation(new BMap.Point(ave2[0], ave2[1]), function(result){
-        if (result){
-        alert('常去地点2：' + result.address);
-        }
-    });
-	myGeo.getLocation(new BMap.Point(ave3[0], ave3[1]), function(result){
-        if (result){
-        alert('常去地点3：' + result.address);
-        }
-    });
-
+	for (var i = 0; i < points.length; i++)
+    {
+        myGeo.getLocation(points_ave[i], function(result){
+            if (result){
+                alert('常去地点：' + result.address);
+            }
+        });
+    }
 
 </script>
 
