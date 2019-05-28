@@ -5,7 +5,7 @@ eps = 0.5
 #最少Neighbor数量
 min_pts = 100
 #最短的持续时间总和
-delta_t = 5000
+delta_t = 7200
 
 #重置数据表中的cluster字段
 mysql_connect.reset_database('localhost', 'root', 'wsnxdyj', 'user_trace')

@@ -14,6 +14,11 @@ def DurationCal(timeline1, timeline2):
     item1.append(time1[4:])
     item2.append(time2[4:])
 
-    res = (int(item2[0]) * 24 * 60 + int(item2[1]) * 60 + int(item2[2])) - (int(item1[0]) * 24 * 60 + int(item1[1]) * 60 + int(item1[2]))
+    res = (int(item2[0]) * 24 * 60 + int(item2[1]) * 60 + int(item2[2])) - \
+          (int(item1[0]) * 24 * 60 + int(item1[1]) * 60 + int(item1[2]))
 
     return res
+
+time1 = '201806010050'
+time2 = '201806022156'
+print(DurationCal(time1, time2))
