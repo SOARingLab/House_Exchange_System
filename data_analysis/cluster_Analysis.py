@@ -32,3 +32,6 @@ for item in data:
             time_distribution[store_key] += durations
 
             durations = 0
+
+print(list(time_distribution.keys()))
+print(list(time_distribution.values()))
