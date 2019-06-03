@@ -24,16 +24,15 @@ def raw(request):
 def clustering(request):
 
     # 聚类之后的类别数量
-    q = trace.objects.values('cluster').distinct()
-    cluster_count = q.count() - 1
-    data = []
-    data_transform = []
+    cluster_count = trace.objects.values('cluster').distinct().count() - 1
 
     # 按类别提取轨迹数据
+    data = []
     for i in range(1, cluster_count+1):
         data.append(trace.objects.filter(cluster = i))
 
     # 对提取的轨迹数据进行解析，构造成可以用json格式传送的形式
+    data_transform = []
     for item in data:
         res = []
         for traces_data in item:
