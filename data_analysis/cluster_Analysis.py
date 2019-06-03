@@ -1,48 +1,31 @@
 from cluster_method.source.mysql_connect import load_data_ana
 from UserProfile.models import trace
 from data_analysis.plotting import pie_plot
+from data_analysis.timeDist_Cal import time_distribute_Cal
+from data_analysis.activityDist_Cal import activity_distribute_Cal
 
 # 使用初始时刻以及持续时间，推算数据点在各时间区间内的时间长度分布，并进行统计
-def Analysis_clusters(data):
+def Analysis_clusters():
 
-    # 存储该类别数据在不同时间段的分布情况
-    time_distribution = {'0-1':0, '1-2':0, '2-3':0, '3-4':0, '4-5':0, '5-6':0, '6-7':0, '7-8':0, '8-9':0, '9-10':0,
-                     '10-11':0, '11-12':0, '12-13':0, '13-14':0, '14-15':0, '15-16':0, '16-17':0, '17-18':0,
-                     '18-19':0, '19-20':0, '20-21':0, '21-22':0, '22-23':0, '23-24':0}
+    # 聚类之后的类别数量
+    cluster_count = trace.objects.values('cluster').distinct().count() - 1
 
-    for item in data:
-        # 初始时刻及时间间隔
-        hours = int(item[0][8:10])
-        minutes = int(item[0][10:])
-        durations = int(item[1])
+    # 对每个类别进行可视化分析
+    for i in range(1, cluster_count + 1):
+        # 获取待处理数据，即每个聚类类别中数据点的start_time和duration
+        data = list(load_data_ana('localhost', 'root', 'wsnxdyj', 'user_trace', i))
+        data = list(map(list, data))
 
-        while durations > 0:
+        # 计算每个类别中的时间区间分布和活动分布
+        time_distribution = time_distribute_Cal(data)
+        activity_distribution = activity_distribute_Cal(time_distribution)
 
-            if minutes + durations >= 60:
-                store_key = str(hours % 24) + '-' + str((hours % 24) + 1)
-                time_distribution[store_key] += (60 - minutes)
+        # 生成绘图所需的参数
+        labels = list(activity_distribution.keys())
+        sizes = list(activity_distribution.values())
 
-                hours += 1
-                durations -= (60 - minutes)
-                minutes = 0
+        # 绘制饼状图
+        pie_plot(labels, sizes)
 
-            else:
-                store_key = str(hours % 24) + '-' + str((hours % 24) + 1)
-                time_distribution[store_key] += durations
-                break
-
-    labels = list(time_distribution.keys())
-    sizes = list(time_distribution.values())
-    pie_plot(labels, sizes)
-
-# 聚类之后的类别数量
-cluster_count = trace.objects.values('cluster').distinct().count() - 1
-
-for i in range(1, cluster_count + 1):
-
-    # 获取待处理数据，即每个聚类类别中数据点的start_time和duration
-    data = list(load_data_ana('localhost', 'root', 'wsnxdyj', 'user_trace', i))
-    data = list(map(list, data))
-
-    # 对每个类别调用Analysis_clusters方法进行可视化分析
-    Analysis_clusters(data)
+    # 调用Analysis_clusters方法进行可视化分析
+Analysis_clusters()
