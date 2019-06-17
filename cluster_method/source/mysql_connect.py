@@ -39,7 +39,7 @@ def load_data_ana(link, username, password, database, cluster):
 
 
 # 更新聚类结果到数据库
-def update_database(link, username, password, database, processed_data):
+def update_cluster(link, username, password, database, processed_data):
     db = pymysql.connect(link, username, password, database)
     cursor = db.cursor()
 

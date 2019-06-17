@@ -56,4 +56,4 @@ print('nums of clusters:{}'.format(len(processed_data)))
 print('nums of noise:{}'.format(len(noise_data)))
 
 #更新数据库
-mysql_connect.update_database('localhost', 'root', 'wsnxdyj', 'user_trace', processed_data)
+mysql_connect.update_cluster('localhost', 'root', 'wsnxdyj', 'user_trace', processed_data)

@@ -60,8 +60,7 @@ def poi_search(request):
     User_id = trace.objects.get(id=1).user_id
 
     # 聚类之后的类别数量
-    q = trace.objects.values('cluster').distinct()
-    cluster_count = q.count() - 1
+    cluster_count = trace.objects.values('cluster').distinct().count() - 1
 
     # 计算各聚类中心点坐标
     res_avg = []

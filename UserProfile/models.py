@@ -35,6 +35,7 @@ class profile(models.Model):
     company_detail = models.CharField(max_length = 500)
     natural_nums = models.IntegerField()
     natural_detail = models.CharField(max_length = 500)
+    other_places = models.TextField()
 
 # Trace表，存放原始轨迹数据集
 class trace(models.Model):
