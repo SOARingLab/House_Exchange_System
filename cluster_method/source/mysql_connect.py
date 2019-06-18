@@ -69,3 +69,48 @@ def reset_database(link, username, password, database):
         db.rollback()
 
     db.close()
+
+# 存储Profile结果
+def save_profile(profile):
+    link = 'localhost'
+    username = 'root'
+    password = 'wsnxdyj'
+    database = 'user_trace'
+    db = pymysql.connect(link, username, password, database)
+    columns = ''
+    for column in profile.keys():
+        columns += column + ','
+    columns = '(' + columns[:-1] + ')'
+    values = str(tuple(profile.values()))
+    cursor = db.cursor()
+    sql = 'INSERT INTO UserProfile_profile' + columns + ' VALUES ' + values
+    try:
+        cursor.execute(sql)
+        db.commit()
+    except:
+        db.rollback()
+
+    db.close()
+
+def load_profile(ID, profile_items):
+    link = 'localhost'
+    username = 'root'
+    password = 'wsnxdyj'
+    database = 'user_trace'
+    db = pymysql.connect(link, username, password, database)
+
+    # 使用 cursor() 方法创建一个游标对象 cursor
+    cursor = db.cursor()
+
+    items = ''
+    for item in profile_items:
+        items += item + ','
+    items = items[:-1]
+
+    sql = "SELECT " + items + " FROM UserProfile_profile WHERE id=" + str(ID)
+    cursor.execute(sql)
+    data = cursor.fetchone()
+
+    db.close()
+
+    return data

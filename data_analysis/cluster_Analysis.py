@@ -5,7 +5,8 @@ from data_analysis.timeDist_Cal import time_distribute_Cal
 from data_analysis.activityDist_Cal import activity_distribute_Cal
 from django.db.models import Avg, Sum
 from data_analysis.poi_Search import search_POI
-from data_analysis.profile_Storage import Memo_profile
+from data_analysis.profile_Generate import Memo_profile
+
 
 # 使用初始时刻以及持续时间，推算数据点在各时间区间内的时间长度分布，并进行统计
 def Analysis_clusters():
@@ -62,7 +63,9 @@ def Analysis_clusters():
     home_POIs = search_POI(home_coordinate)
 
     # 对Profile进行持久化存储
-    #Memo_profile(home_POIs, home_coordinate, work_coordinate, cluster_avg)
-    print(home_coordinate)
+    Memo_profile(home_POIs, home_coordinate, work_coordinate, cluster_avg)
+
 # 调用Analysis_clusters方法进行可视化分析
 Analysis_clusters()
+
+
