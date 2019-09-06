@@ -1,4 +1,3 @@
-
 # 完成从时间区间分布到活动分布的映射
 def activity_distribute_Cal(time_distribution):
 
@@ -15,7 +14,7 @@ def activity_distribute_Cal(time_distribution):
     """
 
     # 存储该类别数据中用户活动的分布情况
-    activity_distribution = {'home_time': 0, 'working_time': 0, 'lunch_time': 0, 'dinner_time': 0, 'night_time': 0}
+    activity_distribution = {'HomeTime': 0, 'WorkTime': 0, 'LunchTime': 0, 'DinnerTime': 0, 'NightTime': 0}
 
     # 根据映射规则进行分类统计
     for i in range (0, 24):
@@ -24,22 +23,22 @@ def activity_distribute_Cal(time_distribution):
 
         # working-time
         if i in range(8, 12) or i in range(14, 17):
-            activity_distribution['working_time'] += time_distribution[str_key]
+            activity_distribution['WorkTime'] += time_distribution[str_key]
 
         # home-time
         elif i in range(22, 24) or i in range(0, 8):
-            activity_distribution['home_time'] += time_distribution[str_key]
+            activity_distribution['HomeTime'] += time_distribution[str_key]
 
         # lunch-time
         elif i in range(12, 14):
-            activity_distribution['lunch_time'] += time_distribution[str_key]
+            activity_distribution['LunchTime'] += time_distribution[str_key]
 
         # dinner-time
         elif i in range(17, 19):
-            activity_distribution['dinner_time'] += time_distribution[str_key]
+            activity_distribution['DinnerTime'] += time_distribution[str_key]
 
         # night-time
         elif i in range(19, 22):
-            activity_distribution['night_time'] += time_distribution[str_key]
+            activity_distribution['NightTime'] += time_distribution[str_key]
 
     return activity_distribution

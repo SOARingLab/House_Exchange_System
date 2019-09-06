@@ -1,3 +1,4 @@
+# 将所有的轨迹记录合并，并按照用户ID进行分组
 import pandas as pd
 
 data_merge = pd.DataFrame()

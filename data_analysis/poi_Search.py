@@ -23,7 +23,7 @@ def search_POI(coordinate):
         # 处理返回值
         response_dict = r.json()
 
-        # 若果返回的结果字段不为空
+        # 检查返回的结果字段是否为空
         if 'results' in response_dict:
             result_trans = response_dict['results']
 
@@ -40,3 +40,15 @@ def search_POI(coordinate):
             cluster_POI[POI] = 'None'
 
     return cluster_POI
+
+# 返回用户居住地所在位置
+def search_Address(coordinate):
+    akeys = 'joLVEFit1SFGg6g1cgHzDZ1Dr9Up9D9H'
+    url = 'http://api.map.baidu.com/reverse_geocoding/v3/?ak=' + akeys + '&output=json&' \
+          'coordtype=bd09ll&location=' + coordinate[1] + ',' + coordinate[0]
+
+    r = requests.get(url)
+    response_dict = r.json()
+
+    if 'result' in response_dict:
+        return response_dict['results']['formatted_address']
