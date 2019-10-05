@@ -70,6 +70,6 @@ def Memo_profile(POIs, home_coordinate, work_coordinate, other_clusters):
     #save_profile(profile)
 
     # 从数据库中读取profile
-    user_profile = extract_Profile(4, list(profile.keys()))
+    # user_profile = extract_Profile(4, list(profile.keys()))
 
 

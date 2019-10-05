@@ -38,7 +38,7 @@ def load_data_ana(link, username, password, database, cluster):
     return data
 
 
-# 更新聚类结果到数据库
+# 更新T-DJ-Cluster聚类结果到数据库
 def update_cluster(link, username, password, database, processed_data):
     db = pymysql.connect(link, username, password, database)
     cursor = db.cursor()
@@ -53,6 +53,23 @@ def update_cluster(link, username, password, database, processed_data):
             except:
                 # 发生错误时回滚
                 db.rollback()
+
+    db.close()
+
+# 更新KMeans聚类结果
+def update_cluster_kmeans(link, username, password, database, result):
+    db = pymysql.connect('localhost', 'root', 'wsnxdyj', 'user_trace')
+    cursor = db.cursor()
+
+    for i in range(len(result)):
+        sql = 'UPDATE UserProfile_trace SET cluster = {} WHERE id = {}'.format(result[i], i + 1)
+
+        try:
+            cursor.execute(sql)
+            db.commit()
+        except:
+            # 发生错误时回滚
+            db.rollback()
 
     db.close()
 
