@@ -1,4 +1,3 @@
-# readme
 ## Introduction
 #### User Profile Technology Based on Spatio-temporal Features and Its Application.
 
@@ -15,6 +14,15 @@ In this paper, the user profile constructed by the trajectory data mining method
 
 - Databases: mysql 8.0.13, Neo4j 3.5.6
 
-- Test Dataset: 0a0aaa2c5802f17d89ac93dc57633b76.csv
+## Explanation
+- UserProfile: Main program
 
+- cluster_method: T-dj-cluster Algorithm
 
+- preprocessing: Data preprocessing
+
+- data_analysis: Analysis of clustering results
+
+- 0a0aaa2c5802f17d89ac93dc57633b76.csv : Test dataset
+
+- neo_FindLoop.py : Searching loops in directed graph in Neo4j
