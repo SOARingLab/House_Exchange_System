@@ -15,7 +15,7 @@ In this paper, the user profile constructed by the trajectory data mining method
 - Databases: mysql 8.0.13, Neo4j 3.5.6
 
 ## Explanation
-- UserProfile: Main program
+- UserProfile: Main processing
 
 - cluster_method: T-dj-cluster Algorithm
 
