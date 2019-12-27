@@ -30,6 +30,6 @@ def line_chart(time_distributions):
     plt.ylabel('Duration')
     plt.xlabel("Time_interval")
 
-    for time_dist in range(len(time_distributions)):
+    for time_dist in time_distributions:
         plt.plot(time_dist[0], time_dist[1])
     plt.show()

@@ -54,8 +54,8 @@ def Analysis_clusters():
         sizes = list(activity_distribution.values())
 
         # 绘制饼状图
-        pie_plot(labels, sizes)
-
+        #pie_plot(labels, sizes)
+    print(cluster_data)
     # 绘制折线图
     #line_chart(cluster_data)
 
@@ -70,7 +70,7 @@ def Analysis_clusters():
 
     # 用户居住地位置
     home_address = search_Address(home_coordinate)
-    print(home_address)
+    #print(home_address)
 
     # 除home&working place 之外的其余常去地点
     cluster_avg.remove(home_coordinate)
@@ -78,7 +78,7 @@ def Analysis_clusters():
 
     # 搜索居住地周边的POI分布
     home_POIs = search_POI(home_coordinate)
-    print(home_POIs)
+    #print(home_POIs)
     # 对Profile进行持久化存储
     # Memo_profile(home_POIs, home_coordinate, work_coordinate, cluster_avg)
 
